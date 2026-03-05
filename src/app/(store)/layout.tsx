@@ -1,0 +1,18 @@
+import Navbar from "../../components/store/Navbar";
+import Footer from "../../components/store/Footer";
+
+export default function StoreLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen container mx-auto px-4 py-6">
+        {children}
+      </main>
+      <Footer />
+    </>
+  );
+}
