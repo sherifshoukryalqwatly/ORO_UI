@@ -53,10 +53,18 @@ const products = [
   },
 ];
 
+ const slides = [
+    { id: 1, image: "/hongkong1081704.jpg", title: "Premium Kitchen Essentials", subtitle: "Upgrade your cooking experience with ORO" },
+    { id: 2, image: "/download.jpg", title: "Modern Cookware Collection", subtitle: "Quality tools for every kitchen" },
+    { id: 3, image: "/download (1).jpg", title: "Cook Like a Pro", subtitle: "Discover our best kitchen products" },
+  ];
+
 export default function Home() {
   return (
     <>
-      <Hero />
+      <section className="w-full">
+        <Hero slides={slides} />
+      </section>
 
       <Categories />
 
