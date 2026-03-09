@@ -18,9 +18,10 @@ const config: Config = {
 
     extend: {
       colors: {
-        primary: "#ea580c",     // kitchen brand color
-        secondary: "#f97316",
-        accent: "#fb923c",
+        Background: "#F9FAFB",
+        primary: "#1F2937",     // kitchen brand color
+        secondary: "#6B7280",
+        accent: "#D4A373",
         dark: "#1f2937",
         light: "#f9fafb",
       },

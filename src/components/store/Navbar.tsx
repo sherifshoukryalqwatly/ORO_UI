@@ -7,6 +7,15 @@ import logo from "../../assets/logo.png"; // PNG logo path
 export default function Navbar() {
   const categories = ["Cookware", "Glassware", "Dishes", "Utensils", "Bakeware"];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);  
+
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const [lang, setLang] = useState("EN");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const changeLang = (value: string) => {
+    setLang(value);
+    setIsLangOpen(false);
+  };
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -54,12 +63,50 @@ export default function Navbar() {
         </div>
 
         {/* Search Box */}
-        <div className="hidden md:flex flex-1 justify-center px-4">
+        <div className="hidden md:flex flex-1 justify-center px-4 items-center gap-3">
           <input
             type="text"
             placeholder="Search products..."
             className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
           />
+
+          {/* Language Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setIsLangOpen(!isLangOpen)}
+              className="flex items-center gap-1 px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
+            >
+              🌐 {lang}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+
+            {isLangOpen && (
+              <div className="absolute right-0 mt-2 w-36 bg-white border border-gray-200 shadow-lg rounded-md z-50">
+                <button
+                  onClick={() => changeLang("EN")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  English
+                </button>
+
+                <button
+                  onClick={() => changeLang("AR")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  العربية
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Profile & Cart */}
@@ -95,9 +142,63 @@ export default function Navbar() {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden ml-4">
-          <button className="text-gray-700 focus:outline-none">☰</button>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-gray-700 focus:outline-none text-2xl"
+          >
+            ☰
+          </button>
         </div>
       </div>
+      <nav>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-200 px-4 pb-4">
+            
+            {/* Categories */}
+            <div className="py-2">
+              <p className="font-semibold text-gray-700 mb-2">Categories</p>
+              {categories.map((cat) => (
+                <Link
+                  key={cat}
+                  href={`/categories/${cat.toLowerCase()}`}
+                  className="block py-2 text-gray-600 hover:text-black"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {cat}
+                </Link>
+              ))}
+            </div>
+
+            {/* Other Links */}
+            <Link
+              href="/about"
+              className="block py-2 text-gray-700 hover:text-black"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+
+            <Link
+              href="/contact"
+              className="block py-2 text-gray-700 hover:text-black"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+
+            {/* Search */}
+            <div className="mt-3">
+              <input
+                type="text"
+                placeholder="Search products..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-md"
+              />
+            </div>
+
+          </div>
+        )}
+      </nav>
     </nav>
   );
 }
