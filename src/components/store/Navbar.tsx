@@ -1,39 +1,67 @@
 "use client";
-import { useState } from "react";
+import { useState , useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../assets/logo.png"; // PNG logo path
+import LoginModal from "./Login";
+import Signup from "./Signup";
+import Notification from "./Notifications";
 
 export default function Navbar() {
   const categories = ["Cookware", "Glassware", "Dishes", "Utensils", "Bakeware"];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);  
+  const dropdownRef = useRef<HTMLDivElement>(null); 
 
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [lang, setLang] = useState("EN");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const [cartCount, setCartCount] = useState(3);
+  const [notificationCount, setNotificationCount] = useState(5);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+
   const changeLang = (value: string) => {
     setLang(value);
     setIsLangOpen(false);
   };
+   // Close categories dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <Image src={logo} alt="ORO Logo" className="h-16 w-auto" priority />
+        <Link href="/" className="flex items-center fw-bold">
+          ORO
         </Link>
 
         {/* Nav Links */}
         <div className="hidden md:flex gap-6 ml-8 items-center">
           {/* Categories Dropdown */}
-          <div
-            className="relative"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <button className="flex text-gray-700 font-medium hover:text-black transition-colors">
+          <div ref={dropdownRef} className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex text-gray-700 font-medium hover:text-black transition-colors"
+            >
               Categories
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 pt-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-5 pt-2"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
               </svg>
             </button>
@@ -109,10 +137,14 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Profile & Cart */}
-        <div className="flex gap-4 items-center">
+        {/* Profile / Notifications / Cart */}
+        <div className="flex gap-5 items-center">
+
           {/* Profile */}
-          <Link href="/profile" className="text-gray-700 hover:text-black transition-colors">
+          <button 
+            onClick={() => setIsLoginOpen(true)}
+            className="text-gray-700 hover:text-black"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -121,12 +153,22 @@ export default function Navbar() {
               stroke="currentColor"
               className="h-6 w-6"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              <path strokeLinecap="round" strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+              />
             </svg>
-          </Link>
+          </button>
+
+           {/* Notifications popup */}
+          <Notification
+            count={notificationCount}
+            isOpen={isNotificationOpen}
+            toggleOpen={() => setIsNotificationOpen(!isNotificationOpen)}
+          />
+
 
           {/* Cart */}
-          <Link href="/cart" className="text-gray-700 hover:text-black transition-colors">
+          <Link href="/cart" className="relative text-gray-700 hover:text-black">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -135,9 +177,18 @@ export default function Navbar() {
               stroke="currentColor"
               className="h-6 w-6"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+              <path strokeLinecap="round" strokeLinejoin="round"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272"
+              />
             </svg>
+
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
           </Link>
+
         </div>
 
         {/* Mobile Menu Button */}
@@ -199,6 +250,17 @@ export default function Navbar() {
           </div>
         )}
       </nav>
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        openSignup={() => setIsSignupOpen(true)}
+      />
+      <Signup
+        isOpen={isSignupOpen}
+        onClose={() => setIsSignupOpen(false)}
+        openLogin={() => setIsLoginOpen(true)}
+      />
     </nav>
   );
 }

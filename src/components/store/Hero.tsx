@@ -12,11 +12,11 @@ interface Slide {
   id: number;
   image: string;
   title: string;
-  subtitle: string;
+  link?: string;
 }
 
 export default function HeroSlider({ slides }: { slides: Slide[] }) {
-  if (!slides) return null; // ✨ حماية إضافية
+  if (!slides) return null;
 
   return (
     <Swiper
@@ -29,7 +29,14 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
     >
       {slides.map((slide) => (
         <SwiperSlide key={slide.id}>
-          <div className="relative w-full h-[70vh]">
+          
+          {/* Entire slide clickable */}
+          <a
+            href={slide.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block relative w-full h-[70vh]"
+          >
             <Image
               src={slide.image}
               alt={slide.title}
@@ -37,16 +44,8 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
               className="object-cover"
               priority={slide.id === 1}
             />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-center text-white px-6">
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">{slide.title}</h1>
-                <p className="text-lg mb-6">{slide.subtitle}</p>
-                <button className="bg-white text-black px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition">
-                  Shop Now
-                </button>
-              </div>
-            </div>
-          </div>
+          </a>
+
         </SwiperSlide>
       ))}
     </Swiper>
