@@ -1,6 +1,5 @@
 import Navbar from "../../components/store/Navbar";
 import Footer from "../../components/store/Footer";
-import StoreFeatures from "@/src/components/store/StoreFeatures";
 
 export default function StoreLayout({
   children,
@@ -11,9 +10,8 @@ export default function StoreLayout({
     <>
       <Navbar />
 
-      <main>{children}</main>
+      <main className="min-h-screen">{children}</main>
 
-      <StoreFeatures />
       <Footer />
     </>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 interface Props {
   count: number;
@@ -24,25 +25,12 @@ export default function Notification({ count, isOpen, toggleOpen }: Props) {
     <div ref={ref} className="relative">
       <button
         onClick={toggleOpen}
-        className="relative text-gray-700 hover:text-black"
+        className="relative text-gray-700 hover:text-black cursor-pointer"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="h-6 w-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M14.857 17.082a23.848 23.848 0 0 1-5.714 0M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"
-          />
-        </svg>
+        <IoIosNotificationsOutline className="text-xl" />
 
         {count > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+          <span className="absolute -top-4 -right-4 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
             {count}
           </span>
         )}

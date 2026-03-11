@@ -26,7 +26,7 @@ export default function StoreFeatures() {
 
   return (
     <section className="bg-gray-50 py-2">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="px-4">
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
 

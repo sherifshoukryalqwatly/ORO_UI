@@ -18,7 +18,7 @@ export default function CategoryCard({
       className="group block rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition"
     >
       {/* Image */}
-      <div className="relative h-56 w-full">
+      <div className="relative h-40 w-full">
         <Image
           src={image}
           alt={title}
