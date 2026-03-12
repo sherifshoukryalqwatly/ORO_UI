@@ -3,7 +3,7 @@
 import useInView from "@/src/hooks/useInView";
 import Image from "next/image";
 import Link from "next/link";
-import { FiShoppingCart } from "react-icons/fi";
+import { LiaCartPlusSolid } from "react-icons/lia";
 
 interface ProductCardProps {
   id: string;
@@ -104,7 +104,7 @@ export default function ProductCard({
                 ${isOutOfStock ? "bg-gray-400 cursor-not-allowed" : "bg-gray-900 hover:bg-black"}`}
                 title="Add to Cart"
               >
-                <FiShoppingCart size={18} />
+                <LiaCartPlusSolid   size={22} />
               </button>
             </div>
           </div>
