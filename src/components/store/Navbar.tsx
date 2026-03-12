@@ -246,15 +246,40 @@ export default function Navbar() {
             />
           </div>
 
+          <Link href="/products" 
+            className="block py-2 relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+            >
+              All Products
+          </Link>
+
+          <Link href="/products" 
+          className="block py-2 relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+          >
+            Recommended
+          </Link>
+
+          <Link href="/products" 
+            className="block py-2 relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+            >
+              Best Seller
+          </Link>
+
 
           {/* Categories */}
-          <p className="font-semibold mb-2">Categories</p>
 
           {categories.map((cat) => (
             <Link
               key={cat}
               href={`/categories/${cat.toLowerCase()}`}
-              className="block py-2 text-gray-600"
+              className="block py-2 relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {cat}
@@ -264,7 +289,9 @@ export default function Navbar() {
 
           <Link
             href="/about"
-            className="block py-2"
+            className="block py-2 relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             About
@@ -273,7 +300,9 @@ export default function Navbar() {
 
           <Link
             href="/contact"
-            className="block py-2"
+            className="block py-2 relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Contact

@@ -8,24 +8,23 @@ import { LiaCartPlusSolid } from "react-icons/lia";
 interface ProductCardProps {
   id: string;
   title: string;
-  image: string;
+  images: string[];
   price: number;
   stock: number;
   recommended?: boolean;
   bestSeller?: boolean;
 }
 
-
 export default function ProductCard({ 
   id,
   title,
-  image,
+  images,
   price,
   stock,
   recommended,
   bestSeller
 }: ProductCardProps) {
-  const handleAddToCart = () => {
+  const handleAddToCart = (id: string) => {
     console.log("Add to cart:", id);
   };
   const { ref, isVisible } = useInView();
@@ -40,31 +39,16 @@ export default function ProductCard({
         ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}
       `}
     >
-        <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden">
+      <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden">
+
         {/* Image */}
-        <div className="relative w-full aspect-[4/3] overflow-hidden ">
-  
+        <div className="relative w-full aspect-[4/3] overflow-hidden">
+
           {/* Badges */}
           <div className="absolute top-2 left-2 z-20 flex flex-col gap-1">
-
-            {isOutOfStock && (
-              <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">
-                Out of Stock
-              </span>
-            )}
-
-            {bestSeller && !isOutOfStock && (
-              <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded">
-                Best Seller
-              </span>
-            )}
-
-            {isLastOne && !isOutOfStock && (
-              <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded">
-                Last One
-              </span>
-            )}
-
+            {isOutOfStock && <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Out of Stock</span>}
+            {bestSeller && !isOutOfStock && <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded">Best Seller</span>}
+            {isLastOne && !isOutOfStock && <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded">Last One</span>}
           </div>
 
           {recommended && !isOutOfStock && (
@@ -73,14 +57,21 @@ export default function ProductCard({
             </span>
           )}
 
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-            className={`object-cover transition-transform duration-300
-            ${isOutOfStock ? "grayscale opacity-70" : "group-hover:scale-105"}`}
-          />
+          {/* Images */}
+          {images.map((img, index) => (
+            <Image
+              key={img}
+              src={img}
+              alt={`${title} ${index + 1}`}
+              fill
+              sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+              className={`
+                object-cover transition-opacity duration-500
+                ${isOutOfStock ? "grayscale opacity-70" : index === 0 ? "opacity-100 group-hover:opacity-0" : "opacity-0 group-hover:opacity-100"}
+              `}
+            />
+          ))}
+
         </div>
 
         {/* Content */}
@@ -94,23 +85,22 @@ export default function ProductCard({
           <div className="flex items-center justify-between">
             <span className="text-lg font-semibold text-gray-900">${price}</span>
 
-            {/* Buttons as icons */}
             <div className="flex space-x-2">
               <button
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart(id)}
                 disabled={isOutOfStock}
                 type="button"
                 className={`p-2 rounded-md text-white transition cursor-pointer
-                ${isOutOfStock ? "bg-gray-400 cursor-not-allowed" : "bg-gray-900 hover:bg-black"}`}
+                  ${isOutOfStock ? "bg-gray-400 cursor-not-allowed" : "bg-gray-900 hover:bg-black"}`}
                 title="Add to Cart"
               >
-                <LiaCartPlusSolid   size={22} />
+                <LiaCartPlusSolid size={22} />
               </button>
             </div>
           </div>
         </div>
+
       </div>
     </div>
-    
   );
 }

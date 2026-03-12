@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 interface Product {
   id: string;
   title: string;
-  image: string;
+  images: string[]; 
   price: number;
   stock: number;
   recommended?: boolean;
@@ -45,7 +45,7 @@ export default function ProductGrid({ products = [] }: ProductGridProps) {
               key={product.id}
               id={product.id}
               title={product.title}
-              image={product.image}
+              images={product.images}       // pass the array of images
               price={product.price}
               stock={product.stock}
               recommended={product.recommended}
