@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../assets/logo2.png";
@@ -7,16 +7,13 @@ import LoginModal from "./Login";
 import Signup from "./Signup";
 import Notification from "./Notifications";
 
-import { IoIosArrowDown } from "react-icons/io";
 import { MdFavoriteBorder, MdOutlineLanguage } from "react-icons/md";
 import { FaOpencart } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 
 export default function Navbar() {
 
   const categories = ["Cookware", "Glassware", "Dishes", "Utensils", "Bakeware"];
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [lang, setLang] = useState("EN");
@@ -36,17 +33,6 @@ export default function Navbar() {
     setIsLangOpen(false);
   };
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
 
@@ -62,50 +48,71 @@ export default function Navbar() {
         <div className="hidden md:flex flex-1 flex-col px-17">
 
           {/* Search */}
-          <div className="mb-1">
+          <div className="mb-1 relative">
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full px-4 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
           {/* Links */}
           <div className="flex gap-6 justify-center items-center">
 
+            <Link href="/products" 
+            className="relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+            >
+              All Products
+            </Link>
+
+            <Link href="/products" 
+            className="relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+            >
+              Recommended
+            </Link>
+
+            <Link href="/products" 
+            className="relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+            >
+              Best Seller
+            </Link>
+
             {/* Categories */}
-            <div ref={dropdownRef} className="relative">
-
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-1 text-gray-700 hover:text-black font-medium"
-              >
-                Categories
-                <IoIosArrowDown />
-              </button>
-
-              {isDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white border shadow-lg rounded-md">
-
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat}
-                      href={`/categories/${cat.toLowerCase()}`}
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      {cat}
-                    </Link>
-                  ))}
-
-                </div>
-              )}
+            <div className="flex items-center gap-6">
+              {categories.map((cat) => (
+                <Link
+                  key={cat}
+                  href={`/categories/${cat.toLowerCase()}`}
+                  className="relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+                >
+                  {cat}
+                </Link>
+              ))}
             </div>
 
-            <Link href="/about" className="hover:text-black">
+            <Link href="/about" 
+            className="relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+            >
               About
             </Link>
 
-            <Link href="/contact" className="hover:text-black">
+            <Link href="/contact" 
+            className="relative text-gray-700 hover:text-black font-medium transition
+                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                        after:bg-black after:transition-all hover:after:w-full"
+            >
               Contact
             </Link>
 
@@ -121,25 +128,25 @@ export default function Navbar() {
 
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
-              className="flex items-center gap-1 px-3 py-2 hover:bg-gray-100 rounded-md"
+              className="flex items-center gap-1 px-3 py-2 hover:bg-gray-100 rounded-md cursor-pointer"
             >
               <MdOutlineLanguage className="text-xl" />
               {lang}
             </button>
 
             {isLangOpen && (
-              <div className="absolute right-0 mt-2 w-36 bg-white border shadow-md rounded-md">
+              <div className="absolute right-0 mt-2 w-36 bg-white border shadow-lg rounded-md overflow-hidden">
 
                 <button
                   onClick={() => changeLang("EN")}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition"
                 >
                   English
                 </button>
 
                 <button
                   onClick={() => changeLang("AR")}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition"
                 >
                   العربية
                 </button>
@@ -152,7 +159,7 @@ export default function Navbar() {
           {/* Login */}
           <button
             onClick={() => setIsLoginOpen(true)}
-            className="font-semibold hover:text-black"
+            className="font-semibold hover:text-black cursor-pointer"
           >
             Login / Signup
           </button>
@@ -169,10 +176,12 @@ export default function Navbar() {
           {/* Favourites */}
           <Link href="/favourites" className="relative">
 
-            <MdFavoriteBorder className="text-xl" />
+            <MdFavoriteBorder className="text-xl hover:scale-110 transition cursor-pointer" />
 
             {favCount > 0 && (
-              <span className="absolute -top-5 -right-5 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+              <span className="absolute -top-2 -right-2 bg-black text-white text-xs
+                w-5 h-5 flex items-center justify-center rounded-full"
+              >
                 {favCount}
               </span>
             )}
@@ -183,10 +192,12 @@ export default function Navbar() {
           {/* Cart */}
           <Link href="/cart" className="relative">
 
-            <FaOpencart className="text-xl" />
+            <FaOpencart className="text-xl hover:scale-110 transition cursor-pointer" />
 
             {cartCount > 0 && (
-              <span className="absolute -top-5 -right-5 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+              <span className="absolute -top-2 -right-2 bg-black text-white text-xs
+                w-5 h-5 flex items-center justify-center rounded-full"
+              >
                 {cartCount}
               </span>
             )}
@@ -200,7 +211,7 @@ export default function Navbar() {
         <div className="flex md:hidden items-center gap-4">
 
           <Link href="/cart" className="relative">
-            <FaOpencart className="text-xl" />
+            <FaOpencart className="text-xl hover:scale-110 transition cursor-pointer" />
 
             {cartCount > 0 && (
               <span className="absolute -top-3 -right-3 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -224,7 +235,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
 
-        <div className="md:hidden bg-white border-t px-4 pb-4">
+        <div className="md:hidden bg-white border-t shadow-lg px-4 pb-6">
 
           {/* Search */}
           <div className="mt-3 mb-4">

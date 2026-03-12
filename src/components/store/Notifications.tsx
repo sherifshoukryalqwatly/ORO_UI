@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
-import { IoIosNotificationsOutline } from "react-icons/io";
+import { RiNotification2Line } from "react-icons/ri";
 
 interface Props {
   count: number;
@@ -27,10 +27,10 @@ export default function Notification({ count, isOpen, toggleOpen }: Props) {
         onClick={toggleOpen}
         className="relative text-gray-700 hover:text-black cursor-pointer"
       >
-        <IoIosNotificationsOutline className="text-xl" />
-
+        <RiNotification2Line  className="text-xl hover:scale-110 transition-transform duration-200 cursor-pointer" />
         {count > 0 && (
-          <span className="absolute -top-4 -right-4 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs
+                w-5 h-5 flex items-center justify-center rounded-full shadow-md">
             {count}
           </span>
         )}
@@ -41,7 +41,7 @@ export default function Notification({ count, isOpen, toggleOpen }: Props) {
           <p className="font-semibold mb-2">Notifications</p>
           <ul className="space-y-2 max-h-60 overflow-y-auto">
             {[...Array(count)].map((_, i) => (
-              <li key={i} className="text-gray-700 text-sm border-b pb-1">
+              <li key={i} className="text-gray-700 text-sm border-b pb-1 last:border-b-0 hover:bg-gray-100 rounded transition px-2 py-1 cursor-pointer">
                 Notification {i + 1}
               </li>
             ))}

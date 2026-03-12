@@ -36,7 +36,7 @@ export default function ProductCard({
     <div
       ref={ref}
       className={`
-        transform transition-all duration-700 ease-out
+        transform transition-all duration-700 ease-out cursor-pointer
         ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}
       `}
     >
@@ -100,7 +100,7 @@ export default function ProductCard({
                 onClick={handleAddToCart}
                 disabled={isOutOfStock}
                 type="button"
-                className={`p-2 rounded-md text-white transition
+                className={`p-2 rounded-md text-white transition cursor-pointer
                 ${isOutOfStock ? "bg-gray-400 cursor-not-allowed" : "bg-gray-900 hover:bg-black"}`}
                 title="Add to Cart"
               >
