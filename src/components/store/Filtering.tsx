@@ -21,7 +21,7 @@ export default function SidebarFilters({
   setPriceRange: (s: "all" | "price0_50" | "price50_100" | "price100_200" | "price200_plus") => void;
 }) {
   return (
-    <aside className="w-full md:w-64 p-4 bg-gray-50 shadow-lg h-screen sticky top-0">
+    <aside className="w-full md:w-64 px-4 bg-gray-50 shadow-lg h-screen sticky top-0">
         <h2 className="font-bold mb-3 text-lg">Filters</h2>
 
         {/* Categories */}

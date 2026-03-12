@@ -10,6 +10,7 @@ import Notification from "./Notifications";
 import { MdFavoriteBorder, MdOutlineLanguage } from "react-icons/md";
 import { FaOpencart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import { useSearchParams } from "next/navigation";
 
 export default function Navbar() {
 
@@ -32,6 +33,10 @@ export default function Navbar() {
     setLang(value);
     setIsLangOpen(false);
   };
+
+  const searchParams = useSearchParams();
+  const currentFilter = searchParams.get("filter") || "all";
+  const isActive = (filterValue: string) => currentFilter === filterValue;
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -59,63 +64,77 @@ export default function Navbar() {
           </div>
 
           {/* Links */}
-          <div className="flex gap-6 justify-center items-center">
-
-            <Link href="/products" 
-            className="relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
+          <div className="flex gap-6 justify-center items-center flex-wrap">
+            {/* Main Filters */}
+            <Link
+              href="/products"
+              className={`relative text-gray-700 font-medium transition ${
+                isActive("all") ? "text-black" : "hover:text-black"
+              } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+                isActive("all") ? "after:w-full" : "hover:after:w-full"
+              }`}
             >
               All Products
             </Link>
 
-            <Link href="/products" 
-            className="relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
+            <Link
+              href="/products?filter=recommended"
+              className={`relative text-gray-700 font-medium transition ${
+                isActive("recommended") ? "text-black" : "hover:text-black"
+              } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+                isActive("recommended") ? "after:w-full" : "hover:after:w-full"
+              }`}
             >
               Recommended
             </Link>
 
-            <Link href="/products" 
-            className="relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
+            <Link
+              href="/products?filter=bestSeller"
+              className={`relative text-gray-700 font-medium transition ${
+                isActive("bestSeller") ? "text-black" : "hover:text-black"
+              } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+                isActive("bestSeller") ? "after:w-full" : "hover:after:w-full"
+              }`}
             >
               Best Seller
             </Link>
 
             {/* Categories */}
-            <div className="flex items-center gap-6">
-              {categories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={`/categories/${cat.toLowerCase()}`}
-                  className="relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
-                >
-                  {cat}
-                </Link>
-              ))}
-            </div>
+            {categories.map((cat) => (
+              <Link
+                key={cat}
+                href={`/products?category=${cat.toLowerCase()}`}
+                className={`relative text-gray-700 font-medium transition ${
+                  searchParams.get("category")?.toLowerCase() === cat.toLowerCase()
+                    ? "text-black"
+                    : "hover:text-black"
+                } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+                  searchParams.get("category")?.toLowerCase() === cat.toLowerCase()
+                    ? "after:w-full"
+                    : "hover:after:w-full"
+                }`}
+              >
+                {cat}
+              </Link>
+            ))}
 
-            <Link href="/about" 
-            className="relative text-gray-700 hover:text-black font-medium transition
+            <Link
+              href="/about"
+              className="relative text-gray-700 hover:text-black font-medium transition
                         after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
                         after:bg-black after:transition-all hover:after:w-full"
             >
               About
             </Link>
 
-            <Link href="/contact" 
-            className="relative text-gray-700 hover:text-black font-medium transition
+            <Link
+              href="/contact"
+              className="relative text-gray-700 hover:text-black font-medium transition
                         after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
                         after:bg-black after:transition-all hover:after:w-full"
             >
               Contact
             </Link>
-
           </div>
         </div>
 
@@ -234,7 +253,6 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-
         <div className="md:hidden bg-white border-t shadow-lg px-4 pb-6">
 
           {/* Search */}
@@ -246,63 +264,79 @@ export default function Navbar() {
             />
           </div>
 
-          <Link href="/products" 
-            className="block py-2 relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
-            >
-              All Products
+          {/* Product Filters */}
+          <Link
+            href="/products"
+            className={`block py-2 relative text-gray-700 font-medium transition ${
+              isActive("all") ? "text-black" : "hover:text-black"
+            } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+              isActive("all") ? "after:w-full" : "hover:after:w-full"
+            }`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            All Products
           </Link>
 
-          <Link href="/products" 
-          className="block py-2 relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
+          <Link
+            href="/products?filter=recommended"
+            className={`block py-2 relative text-gray-700 font-medium transition ${
+              isActive("recommended") ? "text-black" : "hover:text-black"
+            } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+              isActive("recommended") ? "after:w-full" : "hover:after:w-full"
+            }`}
+            onClick={() => setIsMobileMenuOpen(false)}
           >
             Recommended
           </Link>
 
-          <Link href="/products" 
-            className="block py-2 relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
-            >
-              Best Seller
+          <Link
+            href="/products?filter=bestSeller"
+            className={`block py-2 relative text-gray-700 font-medium transition ${
+              isActive("bestSeller") ? "text-black" : "hover:text-black"
+            } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+              isActive("bestSeller") ? "after:w-full" : "hover:after:w-full"
+            }`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Best Seller
           </Link>
 
-
           {/* Categories */}
-
           {categories.map((cat) => (
             <Link
               key={cat}
-              href={`/categories/${cat.toLowerCase()}`}
-              className="block py-2 relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
+              href={`/products?category=${cat.toLowerCase()}`}
+              className={`block py-2 relative text-gray-700 font-medium transition ${
+                searchParams.get("category")?.toLowerCase() === cat.toLowerCase()
+                  ? "text-black"
+                  : "hover:text-black"
+              } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all ${
+                searchParams.get("category")?.toLowerCase() === cat.toLowerCase()
+                  ? "after:w-full"
+                  : "hover:after:w-full"
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {cat}
             </Link>
           ))}
 
-
+          {/* About & Contact */}
           <Link
             href="/about"
             className="block py-2 relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
+                      after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                      after:bg-black after:transition-all hover:after:w-full"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             About
           </Link>
 
-
           <Link
             href="/contact"
             className="block py-2 relative text-gray-700 hover:text-black font-medium transition
-                        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                        after:bg-black after:transition-all hover:after:w-full"
+                      after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
+                      after:bg-black after:transition-all hover:after:w-full"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Contact
