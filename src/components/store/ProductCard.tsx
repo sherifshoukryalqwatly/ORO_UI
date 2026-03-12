@@ -3,25 +3,34 @@
 import useInView from "@/src/hooks/useInView";
 import Image from "next/image";
 import Link from "next/link";
-import { FiShoppingCart, FiRepeat } from "react-icons/fi";
+import { FiShoppingCart } from "react-icons/fi";
 
 interface ProductCardProps {
   id: string;
   title: string;
   image: string;
   price: number;
+  stock: number;
+  recommended?: boolean;
+  bestSeller?: boolean;
 }
 
-export default function ProductCard({ id, title, image, price }: ProductCardProps) {
+
+export default function ProductCard({ 
+  id,
+  title,
+  image,
+  price,
+  stock,
+  recommended,
+  bestSeller
+}: ProductCardProps) {
   const handleAddToCart = () => {
     console.log("Add to cart:", id);
   };
-
-  const handleExchange = () => {
-    console.log("Exchange clicked:", id);
-  };
-    const { ref, isVisible } = useInView();
-  
+  const { ref, isVisible } = useInView();
+  const isOutOfStock = stock === 0;
+  const isLastOne = stock === 1;
 
   return (
     <div
@@ -33,22 +42,51 @@ export default function ProductCard({ id, title, image, price }: ProductCardProp
     >
         <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden">
         {/* Image */}
-        <Link href={`/product/${id}`}>
-          <div className="relative w-full aspect-[4/3] overflow-hidden">
-            <Image
-              src={image}
-              alt={title}
-              fill
-              sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
+        <div className="relative w-full aspect-[4/3] overflow-hidden ">
+  
+          {/* Badges */}
+          <div className="absolute top-2 left-2 z-20 flex flex-col gap-1">
+
+            {isOutOfStock && (
+              <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">
+                Out of Stock
+              </span>
+            )}
+
+            {bestSeller && !isOutOfStock && (
+              <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded">
+                Best Seller
+              </span>
+            )}
+
+            {isLastOne && !isOutOfStock && (
+              <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded">
+                Last One
+              </span>
+            )}
+
           </div>
-        </Link>
+
+          {recommended && !isOutOfStock && (
+            <span className="absolute top-2 right-2 z-20 bg-green-600 text-white text-xs px-2 py-1 rounded">
+              Recommended
+            </span>
+          )}
+
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+            className={`object-cover transition-transform duration-300
+            ${isOutOfStock ? "grayscale opacity-70" : "group-hover:scale-105"}`}
+          />
+        </div>
 
         {/* Content */}
         <div className="p-4">
           <Link href={`/product/${id}`}>
-            <h3 className="text-gray-800 font-medium mb-2 line-clamp-2 hover:text-black">
+            <h3 className="text-gray-800 font-medium mb-2 line-clamp-1 leading-snug min-h-[44px] hover:text-black">
               {title}
             </h3>
           </Link>
@@ -60,20 +98,13 @@ export default function ProductCard({ id, title, image, price }: ProductCardProp
             <div className="flex space-x-2">
               <button
                 onClick={handleAddToCart}
+                disabled={isOutOfStock}
                 type="button"
-                className="p-2 rounded-md text-white transition bg-gray-900 hover:bg-black"
+                className={`p-2 rounded-md text-white transition
+                ${isOutOfStock ? "bg-gray-400 cursor-not-allowed" : "bg-gray-900 hover:bg-black"}`}
                 title="Add to Cart"
               >
                 <FiShoppingCart size={18} />
-              </button>
-
-              <button
-                onClick={handleExchange}
-                type="button"
-                className="p-2 rounded-md bg-gray-200 hover:bg-gray-300 transition text-gray-700"
-                title="Exchange"
-              >
-                <FiRepeat size={18} />
               </button>
             </div>
           </div>

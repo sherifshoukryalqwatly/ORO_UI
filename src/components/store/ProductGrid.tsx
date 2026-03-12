@@ -7,6 +7,9 @@ interface Product {
   title: string;
   image: string;
   price: number;
+  stock: number;
+  recommended?: boolean;
+  bestSeller?: boolean;
 }
 
 interface ProductGridProps {
@@ -44,6 +47,9 @@ export default function ProductGrid({ products = [] }: ProductGridProps) {
               title={product.title}
               image={product.image}
               price={product.price}
+              stock={product.stock}
+              recommended={product.recommended}
+              bestSeller={product.bestSeller}
             />
           ))}
         </div>
