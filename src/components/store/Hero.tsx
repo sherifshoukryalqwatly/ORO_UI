@@ -20,7 +20,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
   if (!slides) return null;
 
   return (
-    <div className="pt-2 ">
+    <div>
 
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}

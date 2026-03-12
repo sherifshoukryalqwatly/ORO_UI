@@ -59,14 +59,14 @@ export default function Navbar() {
 
 
         {/* Desktop Middle Section */}
-        <div className="hidden md:flex flex-1 flex-col px-10">
+        <div className="hidden md:flex flex-1 flex-col px-17">
 
           {/* Search */}
-          <div className="mb-2">
+          <div className="mb-1">
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
