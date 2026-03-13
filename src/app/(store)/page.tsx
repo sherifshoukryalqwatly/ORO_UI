@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import Categories from "@/src/components/store/CategoriesComponent";
 import ProductGrid from "@/src/components/store/ProductGrid";
 import StoreFeatures from "@/src/components/store/StoreFeatures";
+import RecommendedProducts from "@/src/components/store/RecommendedProducts";
+import BestSellerProducts from "@/src/components/store/BestSellerProducts";
 
 const Hero = dynamic(() => import("@/src/components/store/Hero"), {
   ssr: false,
@@ -18,6 +20,9 @@ const products = [
   { id: "6", title: "IKEA 365+ GUNSTIG Pot stand, magnetic", images: ["https://www.ikea.com/kw/en/images/products/ikea-365-gunstig-pot-stand-magnetic-red-dark-grey__0711770_pe728462_s5.jpg?f=xl","https://www.ikea.com/kw/en/images/products/klippkaktus-storage-turntable__1243264_pe920533_s5.jpg?f=xl"], price: 59, stock: 2 },
   { id: "7", title: "KLOCKREN Steamer insert, stainless steel", images: ["https://www.ikea.com/kw/en/images/products/klockren-steamer-insert-stainless-steel__1481200_pe1000455_s5.jpg?f=xl","https://www.ikea.com/kw/en/images/products/heat-pot-stand-cork__1204806_pe906845_s5.jpg?f=xl"], price: 59, stock: 4 },
   { id: "8", title: "HEAT Pot stand",  images: ["https://www.ikea.com/kw/en/images/products/heat-pot-stand-cork__1204806_pe906845_s5.jpg?f=xl","https://www.ikea.com/kw/en/images/products/klockren-steamer-insert-stainless-steel__1481200_pe1000455_s5.jpg?f=xl"], price: 59, stock: 6 },
+  { id: "9", title: "HEAT Pot stand",  images: ["https://www.ikea.com/kw/en/images/products/heat-pot-stand-cork__1204806_pe906845_s5.jpg?f=xl","https://www.ikea.com/kw/en/images/products/klockren-steamer-insert-stainless-steel__1481200_pe1000455_s5.jpg?f=xl"], price: 59, stock: 6 },
+  { id: "10", title: "HEAT Pot stand",  images: ["https://www.ikea.com/kw/en/images/products/heat-pot-stand-cork__1204806_pe906845_s5.jpg?f=xl","https://www.ikea.com/kw/en/images/products/klockren-steamer-insert-stainless-steel__1481200_pe1000455_s5.jpg?f=xl"], price: 59, stock: 6 },
+  { id: "11", title: "HEAT Pot stand",  images: ["https://www.ikea.com/kw/en/images/products/heat-pot-stand-cork__1204806_pe906845_s5.jpg?f=xl","https://www.ikea.com/kw/en/images/products/klockren-steamer-insert-stainless-steel__1481200_pe1000455_s5.jpg?f=xl"], price: 59, stock: 6 },
 ];
 const slides = [
   {
@@ -49,8 +54,10 @@ export default function Home() {
       {/* PAGE CONTENT */}
       <div className="px-7">
         <Categories />
+
+
         {/* Title */}
-        <div className="text-center mb-10">
+        <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-800">
             Featured Products
           </h2>
@@ -59,6 +66,32 @@ export default function Home() {
           </p>
         </div>
         <ProductGrid products={products} />
+
+
+         {/* Recommended */}
+        <div className="text-center" id="recommended">
+          <h2 className="text-3xl font-bold text-gray-800">
+            Recommended Products
+          </h2>
+          <p className="text-gray-500 mt-2">
+            Products we recommend for you
+          </p>
+        </div>
+
+        <RecommendedProducts products={products} />
+
+        {/* Best Sellers */}
+        <div className="text-center" id="bestseller">
+          <h2 className="text-3xl font-bold text-gray-800">
+            Best Sellers
+          </h2>
+          <p className="text-gray-500 mt-2">
+            Most popular products
+          </p>
+        </div>
+
+        <BestSellerProducts products={products} />
+
         <StoreFeatures />
       </div>
     </>

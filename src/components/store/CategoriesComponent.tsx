@@ -18,7 +18,7 @@ export default function Categories() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gray-50" id="categories">
       <div className="px-4 md:px-6">
 
         {/* Title */}

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
 
@@ -18,10 +17,11 @@ interface ProductGridProps {
   products?: Product[];
 }
 
-export default function ProductGrid({ products = [] }: ProductGridProps) {
-  const [showAll] = useState(false);
+export default function BestSellerProducts({ products = [] }: ProductGridProps) {
 
-  const displayedProducts = showAll ? products : products.slice(0, 10);
+  const bestSellerProducts = products.filter(product => product.bestSeller);
+
+  const displayedProducts = bestSellerProducts.slice(0, 10);
 
   return (
     <section className="py-10">
@@ -52,10 +52,10 @@ export default function ProductGrid({ products = [] }: ProductGridProps) {
         </div>
 
         {/* View More */}
-        {products.length > 10 && (
+        {bestSellerProducts.length > 10 && (
           <div className="flex justify-end mt-10">
             <Link
-              href="/products"
+              href="/products?filter=bestSeller"
               className="px-6 py-3 text-gray-700 rounded-lg hover:text-red-900 transition"
             >
               View More...
