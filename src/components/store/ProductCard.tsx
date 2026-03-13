@@ -3,7 +3,10 @@
 import useInView from "@/src/hooks/useInView";
 import Image from "next/image";
 import Link from "next/link";
+import { FaRegHeart } from "react-icons/fa";
+import { IoEyeOutline } from "react-icons/io5";
 import { LiaCartPlusSolid } from "react-icons/lia";
+import { PiRepeatFill } from "react-icons/pi";
 
 interface ProductCardProps {
   id: string;
@@ -39,40 +42,82 @@ export default function ProductCard({
         ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}
       `}
     >
-      <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden">
+      <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg 
+      transition transform hover:-translate-y-2 duration-300 overflow-hidden">
 
         {/* Image */}
-        <div className="relative w-full aspect-[4/3] overflow-hidden">
+        <div className="relative w-full aspect-[4/3] overflow-hidden group">
 
-          {/* Badges */}
-          <div className="absolute top-2 left-2 z-20 flex flex-col gap-1">
-            {isOutOfStock && <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Out of Stock</span>}
-            {bestSeller && !isOutOfStock && <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded">Best Seller</span>}
-            {isLastOne && !isOutOfStock && <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded">Last One</span>}
-          </div>
+  {/* Badges */}
+  <div className="absolute top-2 left-2 z-20 flex flex-col gap-1">
+    {isOutOfStock && (
+      <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">
+        Out of Stock
+      </span>
+    )}
 
-          {recommended && !isOutOfStock && (
-            <span className="absolute top-2 right-2 z-20 bg-green-600 text-white text-xs px-2 py-1 rounded">
-              Recommended
-            </span>
-          )}
+    {bestSeller && !isOutOfStock && (
+      <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded">
+        Best Seller
+      </span>
+    )}
 
-          {/* Images */}
-          {images.map((img, index) => (
-            <Image
-              key={img}
-              src={img}
-              alt={`${title} ${index + 1}`}
-              fill
-              sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-              className={`
-                object-cover transition-opacity duration-500
-                ${isOutOfStock ? "grayscale opacity-70" : index === 0 ? "opacity-100 group-hover:opacity-0" : "opacity-0 group-hover:opacity-100"}
-              `}
-            />
-          ))}
+    {isLastOne && !isOutOfStock && (
+      <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded">
+        Last One
+      </span>
+    )}
+  </div>
 
-        </div>
+  {recommended && !isOutOfStock && (
+    <span className="absolute top-2 right-2 z-20 bg-green-600 text-white text-xs px-2 py-1 rounded">
+      Recommended
+    </span>
+  )}
+
+  {/* Images */}
+  {images.map((img, index) => (
+    <Image
+      key={img}
+      src={img}
+      alt={`${title} ${index + 1}`}
+      fill
+      sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+      className={`
+        object-cover transition-opacity duration-500
+        ${
+          isOutOfStock
+            ? "grayscale opacity-70"
+            : index === 0
+            ? "opacity-100 group-hover:opacity-0"
+            : "opacity-0 group-hover:opacity-100"
+        }
+      `}
+    />
+  ))}
+
+  {/* Right Icons */}
+  {!isOutOfStock && (
+    <div className="absolute right-5 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2 
+      opacity-0 translate-x-5 group-hover:opacity-100 group-hover:translate-x-0 
+      transition-all duration-300">
+
+      <button className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer">
+        <IoEyeOutline className="text-gray-700 text-lg hover:text-black transition" />
+      </button>
+
+      <button className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer">
+        <FaRegHeart className="text-gray-700 text-lg hover:text-red-500 transition" />
+      </button>
+
+      <button className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer">
+        <PiRepeatFill className="text-gray-700 text-lg hover:text-green-500 transition" />
+      </button>
+
+    </div>
+  )}
+
+</div>
 
         {/* Content */}
         <div className="p-4">

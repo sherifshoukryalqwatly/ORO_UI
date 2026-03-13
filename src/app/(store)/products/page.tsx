@@ -117,7 +117,7 @@ export default function ProductsPage() {
       </aside>
 
       {/* Products Grid */}
-      <div className="flex-1">
+      <div className="flex-1 px-2">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 md:mb-6">All Products</h1>
         <p className="text-gray-500 mb-6">Explore our collection of kitchenware and home essentials.</p>
         <ProductGrid products={filteredProducts} />

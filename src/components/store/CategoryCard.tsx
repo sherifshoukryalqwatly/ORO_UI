@@ -1,6 +1,7 @@
 import useInView from "@/src/hooks/useInView";
 import Image from "next/image";
 import Link from "next/link";
+import { IoEyeOutline } from "react-icons/io5";
 
 interface CategoryCardProps {
   title: string;
@@ -25,18 +26,23 @@ export default function CategoryCard({
     >
       <Link
         href={`/categories/${slug}`}
-        className="group block rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition"
+        className="group block rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg 
+        transform transition duration-300 hover:-translate-y-2"
       >
         {/* Image */}
-        <div className="relative h-40 w-full">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
-          />
+        <div className="group relative h-40 w-full">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition">
+          <IoEyeOutline className="text-white text-3xl" />
         </div>
+      </div>
 
         {/* Title */}
         <div className="p-4 text-center">
