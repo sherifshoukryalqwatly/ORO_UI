@@ -6,13 +6,11 @@ import { IoEyeOutline } from "react-icons/io5";
 interface CategoryCardProps {
   title: string;
   image: string;
-  slug: string;
 }
 
 export default function CategoryCard({
   title,
   image,
-  slug,
 }: CategoryCardProps) {
     const { ref, isVisible } = useInView();
 
@@ -25,7 +23,7 @@ export default function CategoryCard({
       `}
     >
       <Link
-        href={`/categories/${slug}`}
+        href={`/products?category=${title.toLowerCase()}`}
         className="group block rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg 
         transform transition duration-300 hover:-translate-y-2"
       >

@@ -48,7 +48,6 @@ export default function Categories() {
               key={cat.slug}
               title={cat.title}
               image={cat.image}
-              slug={cat.slug}
             />
           ))}
         </div>
