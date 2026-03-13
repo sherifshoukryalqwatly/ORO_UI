@@ -28,7 +28,7 @@ export default function StoreFeatures() {
     <section className="bg-gray-50 py-2">
       <div className="px-4">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
 
           {features.map((feature, index) => (
             <div

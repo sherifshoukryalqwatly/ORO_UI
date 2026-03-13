@@ -17,7 +17,6 @@ export default function Navbar() {
 
   // States
   const [lang, setLang] = useState("EN");
-  const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cartCount] = useState(3);
   const [favCount] = useState(1);
@@ -29,22 +28,20 @@ export default function Navbar() {
   const pathname = usePathname();
   // Helpers
   const linkStyle =
-    "relative text-gray-700 hover:text-black font-medium transition after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all hover:after:w-full";
+    "relative text-gray-700 hover:text-black font-small transition after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all hover:after:w-full";
   const activeStyle = "text-black after:w-full";
-
-  const changeLang = (value: string) => {
-    setLang(value);
-    setIsLangOpen(false);
-  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="px-4 md:px-7 py-3 flex items-center justify-between">
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <Image src={logo} alt="ORO Logo" width={75} />
-        </Link>
+        <div>
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <Image src={logo} alt="ORO Logo" width={75} />
+          </Link>
+        </div>
+        
 
         {/* Desktop Middle Section */}
         <div className="hidden md:flex flex-1 flex-col px-17">
@@ -58,8 +55,8 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Links */}
-          <div className="flex gap-6 justify-center items-center flex-wrap">
+          {/* Desktop Links */}
+          <div className="hidden md:flex gap-6 justify-center items-center">
             <Link href="/products" className={`${linkStyle} ${pathname === "/products" ? activeStyle : ""}`}>
               All Products
             </Link>
@@ -73,24 +70,14 @@ export default function Navbar() {
 
         {/* Desktop Icons */}
         <div className="hidden md:flex gap-5 items-center">
-          {/* Language Selector */}
-          <div className="relative">
+          {/* Language Toggle */}
+          <div>
             <button
-              onClick={() => setIsLangOpen(!isLangOpen)}
+              onClick={() => setLang(lang === "EN" ? "AR" : "EN")}
               className="flex items-center gap-1 px-3 py-2 hover:bg-gray-100 rounded-md cursor-pointer"
             >
               <MdOutlineLanguage className="text-xl" /> {lang}
             </button>
-            {isLangOpen && (
-              <div className="absolute right-0 mt-2 w-36 bg-white border shadow-lg rounded-md overflow-hidden">
-                <button onClick={() => changeLang("EN")} className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition">
-                  English
-                </button>
-                <button onClick={() => changeLang("AR")} className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition">
-                  العربية
-                </button>
-              </div>
-            )}
           </div>
 
           {/* Login / Signup */}
@@ -136,35 +123,77 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-2xl">☰</button>
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-2xl cursor-pointer">☰</button>
         </div>
       </div>
 
       {isMobileMenuOpen && (
-      <div className="md:hidden bg-white shadow-lg px-4 py-6">
-        {/* Search */}
-        <div className="mb-4">
+        <div className="md:hidden bg-white shadow-lg px-4 py-6 space-y-3">
+          {/* Search */}
           <input
             type="text"
             placeholder="Search products..."
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
           />
-        </div>
 
-        {/* Links */}
-        <div className="flex flex-col gap-3">
-          {/* Main Filters */}
-          <Link href="/products" className={`${linkStyle} ${pathname === "/products" ? activeStyle : ""}`}>
+          {/* Links */}
+          <div className="flex flex-col gap-2">
+            <Link
+              href="/products"
+              className={`block text-gray-700 font-medium py-2 px-3 rounded transition ${
+                pathname === "/products" ? "text-black bg-gray-100" : "hover:bg-gray-50"
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               All Products
-          </Link>
-          <Link href="/#recommended" className={linkStyle}>Recommended</Link>
-          <Link href="/#bestseller" className={linkStyle}>Best Seller</Link>
-          <Link href="/#categories" className={linkStyle}>Categories</Link>
-          <Link href="/about" className={`${linkStyle} ${pathname === "/about" ? activeStyle : ""}`}>About</Link>
-          <Link href="/contact" className={`${linkStyle} ${pathname === "/contact" ? activeStyle : ""}`}>Contact</Link>
+            </Link>
+
+            <Link
+              href="/#recommended"
+              className="block text-gray-700 font-medium py-2 px-3 rounded transition hover:bg-gray-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Recommended
+            </Link>
+
+            <Link
+              href="/#bestseller"
+              className="block text-gray-700 font-medium py-2 px-3 rounded transition hover:bg-gray-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Best Seller
+            </Link>
+
+            <Link
+              href="/#categories"
+              className="block text-gray-700 font-medium py-2 px-3 rounded transition hover:bg-gray-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Categories
+            </Link>
+
+            <Link
+              href="/about"
+              className={`block text-gray-700 font-medium py-2 px-3 rounded transition ${
+                pathname === "/about" ? "text-black bg-gray-100" : "hover:bg-gray-50"
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+
+            <Link
+              href="/contact"
+              className={`block text-gray-700 font-medium py-2 px-3 rounded transition ${
+                pathname === "/contact" ? "text-black bg-gray-100" : "hover:bg-gray-50"
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
       {/* Modals */}
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} openSignup={() => setIsSignupOpen(true)} />

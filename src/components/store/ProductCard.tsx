@@ -123,12 +123,9 @@ export default function ProductCard({
           </div>
             {/* Content */}
             <div className="p-4">
-              <Link href={`/product/${id}`}>
-                <h3 className="text-gray-800 font-medium mb-2 line-clamp-1 leading-snug min-h-[44px] hover:text-black">
-                  {title}
-                </h3>
-              </Link>
-
+              <h3 className="text-gray-800 font-medium mb-2 line-clamp-1 leading-snug min-h-[44px] hover:text-black">
+                {title}
+              </h3>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-semibold text-gray-900">${price}</span>
 
@@ -148,6 +145,7 @@ export default function ProductCard({
             </div>
           </div>
       </Link>
+
     </div>
   );
 }
