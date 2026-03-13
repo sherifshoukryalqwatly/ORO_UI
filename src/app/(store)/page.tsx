@@ -6,6 +6,7 @@ import ProductGrid from "@/src/components/store/ProductGrid";
 import StoreFeatures from "@/src/components/store/StoreFeatures";
 import RecommendedProducts from "@/src/components/store/RecommendedProducts";
 import BestSellerProducts from "@/src/components/store/BestSellerProducts";
+import Ad from "@/src/components/store/Ad";
 
 const Hero = dynamic(() => import("@/src/components/store/Hero"), {
   ssr: false,
@@ -68,6 +69,25 @@ export default function Home() {
         <ProductGrid products={products} />
 
 
+        {/* Ads Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+          <Ad
+            title="Spring Sale - 50% Off!"
+            image="https://www.ikea.com/ext/ingkadam/m/21948ee7daac2eb6/original/AHG-KWCAT00011-crop003.jpg?f=xl"
+            link="/products"
+          />
+          <Ad
+            title="New Arrival: Cookware Sets"
+            image="https://www.ikea.com/ext/ingkadam/m/0e3aabffd3e73ccc/original/AHG-Kuwait_Ramadan_05.jpg?f=xl"
+            link="/products"
+          />
+          <Ad
+            title="Free Shipping Today"
+            image="https://www.ikea.com/ext/ingkadam/m/e6f7d3dada6749/original/AHG-KWCAT0007-crop003.jpg?f=xl"
+          />
+        </div>
+
+
          {/* Recommended */}
         <div className="text-center" id="recommended">
           <h2 className="text-3xl font-bold text-gray-800">
@@ -79,6 +99,26 @@ export default function Home() {
         </div>
 
         <RecommendedProducts products={products} />
+
+
+        {/* Ads Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+          <Ad
+            title="Spring Sale - 50% Off!"
+            image="https://www.ikea.com/ext/ingkadam/m/357b42b82b8f56c2/original/PH207367.jpg?f=xl"
+            link="/products"
+          />
+          <Ad
+            title="New Arrival: Cookware Sets"
+            image="https://www.ikea.com/ext/ingkadam/m/6a8047dc1a0f3a15/original/PH207377.jpg?f=xl"
+            link="/products"
+          />
+          <Ad
+            title="Free Shipping Today"
+            image="https://www.ikea.com/ext/ingkadam/m/320e0f35ccfa9bbe/original/PE1000381.jpg?f=xl"
+          />
+        </div>
+
 
         {/* Best Sellers */}
         <div className="text-center" id="bestseller">
