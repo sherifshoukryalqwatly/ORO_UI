@@ -9,7 +9,7 @@ import Signup from "./Signup";
 import Notification from "./Notifications";
 
 import { MdFavoriteBorder, MdOutlineLanguage } from "react-icons/md";
-import { FaOpencart, FaUserCircle } from "react-icons/fa";
+import { FaOpencart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import LoggedinPopup from "./LoggedinPopup";
@@ -118,8 +118,7 @@ export default function Navbar() {
                 className="flex items-center gap-2 hover:text-black"
               >
                 <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm font-semibold">
-                  <FaUserCircle className="text-xl" />
-                  {user?.firstName}
+                  {user?.firstName[0]}{user?.lastName[0]}
                 </div>
 
                 <span>{user.firstName}</span>
