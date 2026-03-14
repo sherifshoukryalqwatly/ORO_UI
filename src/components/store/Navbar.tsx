@@ -9,9 +9,10 @@ import Signup from "./Signup";
 import Notification from "./Notifications";
 
 import { MdFavoriteBorder, MdOutlineLanguage } from "react-icons/md";
-import { FaOpencart } from "react-icons/fa";
+import { FaOpencart, FaUserCircle } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { usePathname } from "next/navigation";
+import LoggedinPopup from "./LoggedinPopup";
 
 export default function Navbar() {
 
@@ -21,15 +22,35 @@ export default function Navbar() {
   const [cartCount] = useState(3);
   const [favCount] = useState(1);
   const [notificationCount] = useState(5);
+  const [isUserOpen, setIsUserOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [user, setUser] = useState<{
+    firstName: string;
+    lastName: string;
+    email: string;
+  } | null>({
+    firstName: "Sherif",
+    lastName: "Shoukry",
+    email: "sherif@email.com",
+  });
 
   const pathname = usePathname();
   // Helpers
   const linkStyle =
     "relative text-gray-700 hover:text-black font-small transition after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-black after:transition-all hover:after:w-full";
   const activeStyle = "text-black after:w-full";
+  const logout = () => {
+    // remove token or user data
+    localStorage.removeItem("token");
+
+    // optional: remove user from state
+    setUser(null);
+
+    // redirect to home
+    window.location.href = "/";
+  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -57,6 +78,7 @@ export default function Navbar() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex gap-6 justify-center items-center">
+            <Link href="/" className={linkStyle}>Home</Link>
             <Link href="/products" className={`${linkStyle} ${pathname === "/products" ? activeStyle : ""}`}>
               All Products
             </Link>
@@ -81,9 +103,37 @@ export default function Navbar() {
           </div>
 
           {/* Login / Signup */}
-          <button onClick={() => setIsLoginOpen(true)} className="font-semibold hover:text-black cursor-pointer">
-            Login / Signup
-          </button>
+          <div className="relative">
+
+            {!user ? (
+              <button
+                onClick={() => setIsLoginOpen(true)}
+                className="font-semibold hover:text-black cursor-pointer"
+              >
+                Login / Signup
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsUserOpen(!isUserOpen)}
+                className="flex items-center gap-2 hover:text-black"
+              >
+                <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm font-semibold">
+                  <FaUserCircle className="text-xl" />
+                  {user?.firstName}
+                </div>
+
+                <span>{user.firstName}</span>
+              </button>
+            )}
+
+            <LoggedinPopup
+              user={user}
+              isOpen={isUserOpen}
+              toggleOpen={() => setIsUserOpen(false)}
+              onLogout={logout}
+            />
+
+          </div>
 
           {/* Notifications */}
           <Notification
